@@ -22,15 +22,6 @@
     "*.{css,scss,sass,vue}": "stylelint",
     "*": "prettier --check --ignore-unknown"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@firebase/util",
-      "@parcel/watcher",
-      "esbuild",
-      "protobufjs",
-      "unrs-resolver"
-    ]
-  },
   "dependencies": {
     "@mdi/js": "^7.4.47",
     "@nuxtjs/google-fonts": "^3.2.0",
