@@ -49,10 +49,10 @@ services:
       SMTP_PASSWORD: ${SMTP_PASSWORD}
       SMTP_HOST: ${SMTP_HOST}
       SMTP_PORT: ${SMTP_PORT}
-      APP_URL: ${SERVICE_URL_WEB_3000}
+      APP_URL: ${SERVICE_URL_WEB}
       APP_NAME: httpSMS
       APP_PORT: 8000
-      SWAGGER_HOST: ${SERVICE_FQDN_API_8000}
+      SWAGGER_HOST: ${SERVICE_FQDN_API}
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/httpsms
       DATABASE_URL_DEDICATED: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/httpsms
       REDIS_URL: redis://@redis:6379
@@ -70,8 +70,8 @@ services:
     build:
       context: ./web
       args:
-        API_BASE_URL: ${SERVICE_URL_API_8000}
-        APP_URL: ${SERVICE_URL_WEB_3000}
+        API_BASE_URL: ${SERVICE_URL_API}
+        APP_URL: ${SERVICE_URL_WEB}
         APP_NAME: httpSMS
         APP_GITHUB_URL: https://github.com/NdoleStudio/httpsms
         APP_DOCUMENTATION_URL: https://docs.httpsms.com
