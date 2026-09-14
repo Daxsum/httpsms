@@ -20,6 +20,7 @@ type BillingService struct {
 	service
 	logger                 telemetry.Logger
 	tracer                 telemetry.Tracer
+	enabled                bool
 	cache                  cache.Cache
 	emailFactory           emails.UserEmailFactory
 	mailer                 emails.Mailer
@@ -28,9 +29,11 @@ type BillingService struct {
 }
 
 // NewBillingService creates a new BillingService
+// The enabled flag should come from the BILLING_ENABLED environment variable.
 func NewBillingService(
 	logger telemetry.Logger,
 	tracer telemetry.Tracer,
+	enabled bool,
 	cache cache.Cache,
 	mailer emails.Mailer,
 	emailFactory emails.UserEmailFactory,
@@ -40,6 +43,7 @@ func NewBillingService(
 	return &BillingService{
 		logger:                 logger.WithService(fmt.Sprintf("%T", s)),
 		tracer:                 tracer,
+		enabled:                enabled,
 		cache:                  cache,
 		emailFactory:           emailFactory,
 		mailer:                 mailer,
@@ -52,6 +56,10 @@ func NewBillingService(
 func (service *BillingService) IsEntitledWithCount(ctx context.Context, userID entities.UserID, count uint) *string {
 	ctx, span, ctxLogger := service.tracer.StartWithLogger(ctx, service.logger)
 	defer span.End()
+
+	if !service.enabled {
+		return nil
+	}
 
 	user, err := service.userRepository.Load(ctx, userID)
 	if err != nil {

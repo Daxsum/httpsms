@@ -999,6 +999,7 @@ func (container *Container) BillingService() (service *services.BillingService) 
 	return services.NewBillingService(
 		container.Logger(),
 		container.Tracer(),
+		os.Getenv("BILLING_ENABLED") == "true",
 		container.InMemoryCache(),
 		container.Mailer(),
 		container.UserEmailFactory(),
